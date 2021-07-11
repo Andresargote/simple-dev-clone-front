@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --black: #171923;
+  --blue: #0011AD;
+  --border-gray: #DDDDDD;
+  --gray-text: #656565;
+  --gray: #F9F9F9;
+  --green: #48BB78;
+  --green-hover: #3F9F67;
+  --red: #E53E3E;
+
+  --hover: #f5f7f8;
+  --hover-mobile: #ebebeb;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background: #eef0f1;
+}
+
+body, input, textarea, button {
+  font-family: Roboto, "Helvetica Neue";
+}
