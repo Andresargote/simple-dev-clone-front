@@ -1,11 +1,14 @@
+import { useState} from "react";
+import useMediaQuery from "../hooks/useMediaQueries";
+
 import styles from "../styles/Header.module.scss";
 import Cancel from "./Cancel";
 import HamburguerMenu from "./HamburguerMenu";
 
-//styles.nav
-//styles.navMobile
-
 export default function Header() {
+  const [menu, setMenu] = useState(false);
+  const isBreakpoint = useMediaQuery(425);
+
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
@@ -16,14 +19,15 @@ export default function Header() {
         </div>
 
         <div className={styles.hamburguerIcon}>
-          <HamburguerMenu />
+          <HamburguerMenu onClick={() => setMenu(true)} />
         </div>
 
-        <nav className={styles.navMobile}>
+        <nav className={!menu || !isBreakpoint ? styles.nav : styles.navMobile}>
           <div className={styles.navMobileHeader}>
             <h3>DEVclone Community</h3>
+
             <div className={styles.cancelIcon}>
-              <Cancel />
+              <Cancel onClick={() => setMenu(false)} />
             </div>
           </div>
 
@@ -42,21 +46,27 @@ export default function Header() {
           <div className={styles.navMobileNav}>
             <ul>
               <li>
-                <a href="#"><span>🏠</span>Home</a>
+                <a href="#">
+                  <span>🏠</span>Home
+                </a>
               </li>
             </ul>
           </div>
 
-          {/* <ul>
+          <ul>
             <li>
               <a href="#">Log in</a>
             </li>
             <li className={styles.navButton}>
               <a href="#">Create account</a>
             </li>
-          </ul> */}
+          </ul>
         </nav>
-        <div className={styles.navMobileTouch} />
+
+        <div
+          className={!menu ? styles.displayNone : styles.navMobileTouch}
+          onClick={() => setMenu(false)}
+        />
       </div>
     </header>
   );
