@@ -1,4 +1,5 @@
-import { useState} from "react";
+import { useState } from "react";
+import Link from "next/link";
 import useMediaQuery from "../hooks/useMediaQueries";
 
 import styles from "../styles/Header.module.scss";
@@ -36,9 +37,19 @@ export default function Header() {
               <p>A place where developers can share their knowledge</p>
               <div className={styles.navMobileEnterButtons}>
                 <button className={styles.navMobileEnterCreate}>
-                  Create account
+                  <Link href="/register">
+                    <a>
+                      Create account
+                    </a>
+                  </Link>
                 </button>
-                <button>Log in</button>
+                <button>
+                  <Link href="/login">
+                    <a>
+                      Log in
+                    </a>
+                  </Link>
+                </button>
               </div>
             </div>
           </div>
@@ -46,19 +57,25 @@ export default function Header() {
           <div className={styles.navMobileNav}>
             <ul>
               <li>
-                <a href="#">
-                  <span>🏠</span>Home
-                </a>
+                <Link href="/">
+                  <a>
+                    <span>🏠</span>Home
+                  </a>
+                </Link>
               </li>
             </ul>
           </div>
 
           <ul>
             <li>
-              <a href="#">Log in</a>
+              <Link href="/login">
+                <a>Log in</a>
+              </Link>
             </li>
             <li className={styles.navButton}>
-              <a href="#">Create account</a>
+              <Link href="/register">
+                <a>Create account</a>
+              </Link>
             </li>
           </ul>
         </nav>

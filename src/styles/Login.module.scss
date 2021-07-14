@@ -1,0 +1,95 @@
+.LoginContainer {
+  height: 92vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .Login {
+    max-width: 50rem;
+    width: 100%;
+    border: 1px solid var(--border-gray);
+    background: white;
+    padding: 2rem 4rem;
+    border-radius: 0.4rem;
+
+    display: flex;
+    flex-direction: column;
+
+    .HeaderEnter {
+      text-align: center;
+      margin-bottom: 2rem;
+      h1 {
+        font-size: 2.2rem;
+        text-transform: uppercase;
+        font-weight: bold;
+
+        .Normal {
+            font-style: normal;
+            text-transform: none;
+            color: black;
+        }
+
+        span {
+          font-weight: lighter;
+          text-transform: lowercase;
+          font-style: italic;
+          color: var(--green);
+        }
+      }
+
+      p {
+        font-size: 1.4rem;
+
+        span {
+            color: var(--green);
+        }
+      }
+    }
+  }
+}
+
+.Form {
+    display: flex;
+    flex-direction: column;
+
+    label {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+
+    input {
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+
+        background: var(--gray);
+        border: 1px solid var(--border-gray);
+
+        border-radius: 0.4rem;
+    }
+
+    .buttonContinue {
+        margin-top: 2rem;
+        margin-bottom: none;
+
+        background: var(--green);
+        color: white;
+        font-weight: 500;
+
+        cursor: pointer;
+
+        border: none;
+        font-size: 1.4rem;
+
+        &:hover {
+            background: var(--green-hover);
+        }
+    }
+}
+
+@media only screen and (max-width: 728px) {
+    .LoginContainer {
+        width: 98%;
+        margin: 0 auto;
+    }
+}

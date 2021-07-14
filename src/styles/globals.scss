@@ -6,13 +6,13 @@
 
 :root {
   --black: #171923;
-  --blue: #0011AD;
-  --border-gray: #DDDDDD;
+  --blue: #0011ad;
+  --border-gray: #dddddd;
   --gray-text: #656565;
-  --gray: #F9F9F9;
-  --green: #48BB78;
-  --green-hover: #3F9F67;
-  --red: #E53E3E;
+  --gray: #f9f9f9;
+  --green: #48bb78;
+  --green-hover: #3f9f67;
+  --red: #e53e3e;
 
   --hover: #f5f7f8;
   --hover-mobile: #ebebeb;
@@ -26,6 +26,47 @@ body {
   background: #eef0f1;
 }
 
-body, input, textarea, button {
+body,
+input,
+textarea,
+button {
   font-family: Roboto, "Helvetica Neue";
+}
+
+.Form {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  input {
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+
+    background: var(--gray);
+    border: 1px solid var(--border-gray);
+
+    border-radius: 0.4rem;
+  }
+
+  .ButtonContinue {
+    margin-top: 2rem;
+    margin-bottom: none;
+
+    background: var(--green);
+    color: white;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    border: none;
+    font-size: 1.4rem;
+
+    &:hover {
+      background: var(--green-hover);
+    }
+  }
 }

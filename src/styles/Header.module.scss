@@ -207,6 +207,11 @@
               background: var(--green);
               color: white;
 
+              a {
+                text-decoration: none;
+                color: white;
+              }
+
               &:hover {
                 background: var(--green-hover);
               }
@@ -221,6 +226,11 @@
               font-size: 1.6rem;
               color: var(--green);
               cursor: pointer;
+
+              a {
+                text-decoration: none;
+                color: black;
+              }
 
               &:hover {
                 background: var(--hover-mobile);
