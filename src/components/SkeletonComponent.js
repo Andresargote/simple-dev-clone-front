@@ -19,7 +19,7 @@ export default function SkeletonComponent() {
             </div>
           </div>
           <h2>
-            <Skeleton count={2} />
+            <Skeleton count={3} />
           </h2>
         </article>
       );
