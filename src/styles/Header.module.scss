@@ -27,8 +27,96 @@
       }
     }
 
-    .hamburguerIcon {
-      display: none;
+    > div {
+      display: flex;
+      align-items: center;
+
+      .userInfo {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        padding: 0.8rem;
+        border-radius: 0.4rem;
+
+        &:hover {
+          background: var(--hover);
+        }
+
+        img {
+          width: 3.5rem;
+          height: 3.5rem;
+          border-radius: 100%;
+          margin-right: 1rem;
+        }
+      }
+
+      .hamburguerIcon {
+        display: none;
+      }
+
+      .userMenuInfo {
+        position: absolute;
+        background: white;
+
+        left: auto;
+        right: 34rem;
+        top: 5.9rem;
+        padding: 1rem;
+
+        border: 3px solid black;
+        border-radius: 0.4rem;
+        width: 25rem;
+
+        .userMenuInfoNameAndUsername {
+          display: flex;
+          flex-direction: column;
+          padding: 0.8rem;
+          border-radius: 0.4rem;
+          cursor: pointer;
+
+          margin-bottom: .5rem;
+
+          &:hover {
+            background: var(--hover);
+            color: var(--green);
+          }
+
+          .name {
+            font-size: 1.6rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+          }
+
+          .username {
+            font-size: 1.4rem;
+            color: #7d8a97;
+          }
+        }
+
+        nav {
+          ul {
+            li {
+              list-style: none;
+              padding: 1rem;
+              border-radius: 0.4rem;
+              cursor: pointer;
+              width: 100%;
+
+              a {
+                text-decoration: none;
+                color: var(--text);
+                font-size: 1.4rem;
+
+              }
+    
+              &:hover {
+                background: var(--hover);
+                color: var(--green);
+              }
+            }
+          }
+        }
+      }
     }
 
     .nav {
@@ -92,10 +180,32 @@
   }
 }
 
+@media only screen and (max-width: 1280px){
+  .header {
+    .headerContainer {
+      width: 95%;
+
+      > div {
+        .userMenuInfo {
+          right: 4rem;
+        }
+
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 1024px) {
   .header {
     .headerContainer {
       width: 95%;
+
+      > div {
+        .userMenuInfo {
+          right: 3rem;
+        }
+
+      }
     }
   }
 }
@@ -108,15 +218,24 @@
       .headerTitle {
         padding: 0.8rem;
       }
+      > div {
+        .hamburguerIcon {
+          display: flex;
+          padding: 0.8rem;
+          border-radius: 0.4rem;
+          cursor: pointer;
+          margin-left: 1rem;
 
-      .hamburguerIcon {
-        display: flex;
-        padding: 0.8rem;
-        border-radius: 0.4rem;
-        cursor: pointer;
+          &:hover {
+            background: var(--hover);
+          }
+        }
 
-        &:hover {
-          background: var(--hover);
+        .userMenuInfo {
+          width: 90%;
+          right: 0;
+          left: 0;
+          margin: 0 auto;
         }
       }
 
@@ -237,36 +356,34 @@
               }
             }
           }
-
         }
         .navMobileNav {
-            padding: 1rem;
+          padding: 1rem;
 
-            ul {
+          ul {
+            width: 100%;
+            li {
+              list-style: none;
+              padding: 1rem;
+              border-radius: 0.4rem;
+              cursor: pointer;
               width: 100%;
-                li {
-                    list-style: none;
-                    padding: 1rem;
-                    border-radius: 0.4rem;
-                    cursor: pointer;
-                    width: 100%;
 
-                    a {
-                        font-size: 1.6rem;
-                        text-decoration: none;
-                        color: black;
+              a {
+                font-size: 1.6rem;
+                text-decoration: none;
+                color: black;
 
-                        span {
-                            margin-right: 1.2rem;
-                        }
-                    }
-
-                    &:hover {
-                        background: var(--hover);
-                    }
+                span {
+                  margin-right: 1.2rem;
                 }
+              }
+
+              &:hover {
+                background: var(--hover);
+              }
             }
-            
+          }
         }
       }
     }

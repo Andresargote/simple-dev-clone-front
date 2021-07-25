@@ -13,9 +13,10 @@
   --green: #48bb78;
   --green-hover: #3f9f67;
   --red: #e53e3e;
-
+  --text: #202428;
   --hover: #f5f7f8;
   --hover-mobile: #ebebeb;
+  --text-gray: #4d5760;
 }
 
 html {
@@ -24,6 +25,7 @@ html {
 
 body {
   background: #eef0f1;
+  color: var(--text);
 }
 
 body,
@@ -69,4 +71,10 @@ button {
       background: var(--green-hover);
     }
   }
+}
+
+.Error {
+  font-size: 1.6rem;
+  color: tomato;
+  margin: 1rem 0rem;
 }

@@ -1,6 +1,35 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import { createUser } from "../services/users";
+import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+
 import styles from "../styles/CreateAccount.module.scss";
 
 export default function CreateAccount() {
+  const router = useRouter();
+  const { register, handleSubmit, errors } = useForm();
+  const [error, setError] = useState({
+    error: "",
+  });
+  const [loader, setLoader] = useState(false);
+
+  const handleCreateUser = async (data) => {
+    setError({ error: "" });
+    setLoader(true);
+
+    const response = await createUser(data);
+
+    if (response?.error) {
+      setLoader(false);
+      setError({ error: response.error });
+    } else {
+      setLoader(false);
+      router.push("/login");
+    }
+  };
+
   return (
     <div className={styles.CreateContainer}>
       <div className={styles.Create}>
@@ -13,9 +42,23 @@ export default function CreateAccount() {
             <span>DEVclone</span> is a developer community for developers
           </p>
         </header>
-        <form className="Form">
+
+        {error.error && <p className="Error">⚠️ {error.error}</p>}
+
+        {loader && (
+          <Loader
+            type="ThreeDots"
+            color="#48bb78"
+            height={25}
+            width={50}
+            style={{ margin: "10px auto" }}
+          />
+        )}
+
+        <form className="Form" onSubmit={handleSubmit(handleCreateUser)}>
           <label htmlFor="username">Username</label>
           <input
+            {...register("username")}
             type="text"
             id="username"
             name="username"
@@ -23,8 +66,9 @@ export default function CreateAccount() {
             required
           />
 
-          <label htmlFor="username">Name</label>
+          <label htmlFor="name">Name</label>
           <input
+            {...register("name")}
             type="text"
             id="name"
             name="name"
@@ -34,6 +78,7 @@ export default function CreateAccount() {
 
           <label htmlFor="email">Email</label>
           <input
+            {...register("email")}
             type="email"
             id="email"
             name="email"
@@ -43,6 +88,7 @@ export default function CreateAccount() {
 
           <label htmlFor="password">Password</label>
           <input
+            {...register("password")}
             type="password"
             id="password"
             name="password"
@@ -51,7 +97,11 @@ export default function CreateAccount() {
             required
           />
 
-          <input type="submit" value="Create account" className="ButtonContinue" />
+          <input
+            type="submit"
+            value="Create account"
+            className="ButtonContinue"
+          />
         </form>
       </div>
     </div>

@@ -1,7 +1,12 @@
-import '../styles/globals.scss'
+import { ContextAuthWrapper } from "../context/AuthContext";
+import "../styles/globals.scss";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <ContextAuthWrapper>
+      <Component {...pageProps} />
+    </ContextAuthWrapper>
+  );
 }
 
-export default MyApp
+export default MyApp;
