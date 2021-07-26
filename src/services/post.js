@@ -11,6 +11,16 @@ const getPosts = async () => {
     }
 }
 
+const getPostByUsername = async (username) => {
+    try {
+        const {data} = await axios.get(`${API_URL}/posts/${username}`);
+        return data;
+    }catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
-    getPosts
+    getPosts,
+    getPostByUsername
 }

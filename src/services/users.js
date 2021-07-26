@@ -48,8 +48,19 @@ const recoverUserInformation = async (token) => {
   }
 }
 
+const getUser = async (user) => {
+  try {
+    const {data} = await axios.get(API_URL + `user/${user}`);
+    return data;
+  }catch (error) {
+    return error;
+  }
+}
+
 module.exports = {
   createUser,
   loginUser,
-  recoverUserInformation
+  recoverUserInformation,
+  getUser,
+  api: API_URL
 };

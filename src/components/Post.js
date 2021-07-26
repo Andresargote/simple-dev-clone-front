@@ -47,25 +47,3 @@ export default function Post() {
     </>
   );
 }
-
-/* {
-  loading ? (
-    <h1>Cargando..</h1>
-  ) : (
-  posts.map((post) => {
-      return (
-        <article className={styles.article} key={post.id}>
-          <div className={styles.articleUser}>
-            <img src="https://github.com/andresargote.png" alt={post.username} />
-            <div>
-                <span>{post.creator}</span>
-                <time dateTime={post.date}>{useFormatDate(post.date)}</time>
-            </div>
-          </div>
-          <h2>{post.title}</h2>
-        </article>
-      );
-    });
-  )
-}
- */

@@ -40,7 +40,7 @@ export default function Header() {
                 <nav>
                   <ul>
                     <li>
-                      <a href="#">Dashboard</a>
+                      <a href={`/${user.username}`}>Dashboard</a>
                     </li>
                     <li>
                       <a href="#">Create post</a>
