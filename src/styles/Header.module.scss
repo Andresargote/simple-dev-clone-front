@@ -20,12 +20,17 @@
         text-transform: uppercase;
         font-weight: bold;
 
-        span {
-          font-weight: lighter;
-          text-transform: lowercase;
-          font-style: italic;
-          color: var(--green);
+        a {
+          text-decoration: none;
+          
+          span {
+            font-weight: lighter;
+            text-transform: lowercase;
+            font-style: italic;
+            color: var(--green);
+          }
         }
+
       }
     }
 
@@ -70,28 +75,32 @@
         width: 25rem;
 
         .userMenuInfoNameAndUsername {
-          display: flex;
-          flex-direction: column;
-          padding: 0.8rem;
-          border-radius: 0.4rem;
-          cursor: pointer;
 
-          margin-bottom: .5rem;
-
-          &:hover {
-            background: var(--hover);
-            color: var(--green);
-          }
-
-          .name {
-            font-size: 1.6rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-          }
-
-          .username {
-            font-size: 1.4rem;
-            color: #7d8a97;
+          a {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            padding: 0.8rem;
+            border-radius: 0.4rem;
+            cursor: pointer;
+  
+            margin-bottom: .5rem;
+  
+            &:hover {
+              background: var(--hover);
+              color: var(--green);
+            }
+  
+            .name {
+              font-size: 1.6rem;
+              font-weight: 500;
+              margin-bottom: 0.5rem;
+            }
+  
+            .username {
+              font-size: 1.4rem;
+              color: #7d8a97;
+            }
           }
         }
 

@@ -1,5 +1,5 @@
 import Skeleton from "react-loading-skeleton";
-import styles from "../styles/Post.module.scss";
+import styles from "../styles/Dashboard.module.scss";
 
 export default function SkeletonDashboard() {
   return Array(5)
@@ -10,6 +10,10 @@ export default function SkeletonDashboard() {
           <h2>
             <Skeleton count={2} />
           </h2>
+          <div className={styles.articlesButtons}>
+            <Skeleton width={50} height={28} style={{marginRight: "10px"}}/>
+            <Skeleton  width={50} height={28}/>
+          </div>
         </article>
       );
     });

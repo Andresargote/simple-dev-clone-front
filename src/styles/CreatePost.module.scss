@@ -1,0 +1,18 @@
+.main {
+    max-width: 30%;
+    margin: 2rem auto;
+  }
+  
+  @media only screen and (max-width: 1024px) {
+    .main {
+      max-width: 60%;
+    }
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .main {
+      max-width: 95%;
+    }
+  }
+  
+  

@@ -56,6 +56,10 @@ export default function Dashboard({ data }) {
             return (
               <article className={styles.article} key={post.id}>
                 <h2>{post.title}</h2>
+                <div className={styles.articlesButtons}>
+                  <button className={styles.delete}>Delete</button>
+                  <button>Edit</button>
+                </div>
               </article>
             );
           })

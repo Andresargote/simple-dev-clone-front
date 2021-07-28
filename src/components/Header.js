@@ -19,28 +19,43 @@ export default function Header() {
       <div className={styles.headerContainer}>
         <div className={styles.headerTitle}>
           <h1>
-            Dev<span>clone</span>
+            <Link href="/">
+              <a>
+                Dev<span>clone</span>
+              </a>
+            </Link>
           </h1>
         </div>
 
         <div>
           {user && (
             <>
-              <div className={styles.userInfo} onClick={() => setUserMenu(!userMenu)}>
+              <div
+                className={styles.userInfo}
+                onClick={() => setUserMenu(!userMenu)}
+              >
                 <img src={user?.avatar_url} alt={`${user?.username}-img`} />
                 <ArrowDown />
               </div>
 
-              <div className={userMenu ? styles.userMenuInfo : styles.displayNone}>
+              <div
+                className={userMenu ? styles.userMenuInfo : styles.displayNone}
+              >
                 <div className={styles.userMenuInfoNameAndUsername}>
-                  <span className={styles.name}>{user.name}</span>
-                  <span className={styles.username}>{user.username}</span>
+                  <Link href={`/${user.username}`}>
+                    <a>
+                      <span className={styles.name}>{user.name}</span>
+                      <span className={styles.username}>{user.username}</span>
+                    </a>
+                  </Link>
                 </div>
-                
+
                 <nav>
                   <ul>
                     <li>
-                      <a href={`/${user.username}`}>Dashboard</a>
+                      <Link href={`/${user.username}`}>
+                        <a>Dashboard</a>
+                      </Link>
                     </li>
                     <li>
                       <a href="#">Create post</a>

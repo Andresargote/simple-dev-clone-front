@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getPosts } from "../services/post";
+import Link from "next/link";
 import useFormatDate from "../hooks/useFormatDate";
 import styles from "../styles/Post.module.scss";
 import SkeletonComponent from "./SkeletonComponent";
@@ -35,7 +36,11 @@ export default function Post() {
                   alt={post.username}
                 />
                 <div>
-                  <span>{post.creator}</span>
+                  <Link href={`/${post.creator}`}>
+                    <a>
+                      <span>{post.creator}</span>
+                    </a>
+                  </Link>
                   <time dateTime={post.date}>{useFormatDate(post.date)}</time>
                 </div>
               </div>

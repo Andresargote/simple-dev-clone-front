@@ -1,0 +1,31 @@
+.textContainer {
+    background: white;
+    border-radius: .4rem;
+    border: 1px solid #dbddde;
+    padding: 1rem;
+}
+
+
+.button {
+    padding: .5rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-right: .8rem;
+    margin-bottom: 1rem;
+
+    border: 1px solid #dbddde;
+    border-radius: 0.4rem;
+
+    &:last-child {
+        margin-right: none;
+    }
+}
+
+.isActive {
+    @extend .button;
+
+    background: var(--green);
+    border: 1px solid transparent;
+    color: white;
+}
