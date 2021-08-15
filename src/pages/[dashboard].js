@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { parseCookies } from "nookies";
 import Head from "next/head";
 import Header from "../components/Header";
 import SkeletonDashboard from "../components/SkeletonDashboard";
@@ -7,11 +8,15 @@ import { getPostByUsername } from "../services/post";
 import { AuthContext } from "../context/AuthContext";
 
 import styles from "../styles/Dashboard.module.scss";
+import Link from "next/link";
+import Modal from "../components/Modal";
 
-export default function Dashboard({ data }) {
+export default function Dashboard({ data, token }) {
   const { user } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [postToDelete, setPostToDelete] = useState({}); 
 
   useEffect(() => {
     if (user?.username === data.username) {
@@ -29,6 +34,14 @@ export default function Dashboard({ data }) {
     return;
   }, [user]);
 
+  const handleDeletePost = (id, title) => {
+    setModal(true);
+    setPostToDelete({
+      id,
+      title
+    });
+  };
+
   return (
     <>
       <Head>
@@ -36,12 +49,15 @@ export default function Dashboard({ data }) {
       </Head>
       <Header />
       <main className={styles.dashboardMain}>
+        {modal && <Modal token={token} user={user} post={postToDelete} setPost={setPostToDelete} setModal={setModal}/>}
         <div className={styles.dashboardUser}>
           <img src="https://github.com/andresargote.png" alt={data.username} />
           <div className={styles.usernameAndEdit}>
             <h2>{data.username}</h2>
             {user?.username === data.username && (
-              <a className={styles.editProfile}>Edit profile</a>
+              <Link href="/edit-profile">
+                <a className={styles.editProfile}>Edit profile</a>
+              </Link>
             )}
           </div>
           <p>{data.bio ? data.bio : "404 bio not found"}</p>
@@ -52,12 +68,17 @@ export default function Dashboard({ data }) {
         {loading ? (
           <SkeletonDashboard />
         ) : (
-          posts.map((post) => {
+          posts.map(({ id, title }) => {
             return (
-              <article className={styles.article} key={post.id}>
-                <h2>{post.title}</h2>
+              <article className={styles.article} key={id}>
+                <h2>{title}</h2>
                 <div className={styles.articlesButtons}>
-                  <button className={styles.delete}>Delete</button>
+                  <button
+                    className={styles.delete}
+                    onClick={() => handleDeletePost(id, title)}
+                  >
+                    Delete
+                  </button>
                   <button>Edit</button>
                 </div>
               </article>
@@ -71,12 +92,14 @@ export default function Dashboard({ data }) {
 
 export async function getServerSideProps(ctx) {
   const user = ctx.params.dashboard;
+  const { ["devclone.token"]: token } = parseCookies(ctx);
 
   const data = await getUser(user);
 
   return {
     props: {
       data,
+      token
     },
   };
 }

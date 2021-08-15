@@ -89,7 +89,7 @@ button, a {
   min-height: 50rem;
   border-radius: 0.4rem;
   padding: 1rem;
-
+  border: 1px solid #dbddde;
 
   > * + * {
     margin-top: 0.75em;
@@ -98,6 +98,30 @@ button, a {
   ul,
   ol {
     padding: 0 1rem;
+  }
+
+  h1 {
+    font-size: 3.2rem;
+  }
+
+  h2 {
+    font-size: 2.4rem;
+  }
+
+  h3 {
+    font-size: 2rem;
+  }
+
+  h4 {
+    font-size: 1.6rem;
+  }
+
+  h5 {
+    font-size: 1.2rem;
+  }
+
+  h6 {
+    font-size: 1.1rem;
   }
 
   h1,
@@ -125,7 +149,7 @@ button, a {
       color: inherit;
       padding: 0;
       background: none;
-      font-size: 0.8rem;
+      font-size: 1.2rem;
     }
   }
 
@@ -144,4 +168,9 @@ button, a {
     border-top: 2px solid rgba(#0d0d0d, 0.1);
     margin: 2rem 0;
   }
+
+  p {
+    font-size: 1.6rem;
+  }
+  
 }

@@ -1,5 +1,10 @@
+import { useState } from "react";
+import router, { useRouter } from "next/router";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { createPost } from "../services/post";
+import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import styles from "../styles/TextEditor.module.scss";
 
 const MenuBar = ({ editor }) => {
@@ -8,125 +13,163 @@ const MenuBar = ({ editor }) => {
   }
 
   return (
-    <>
-      {/* <button
-        onClick={() => editor.chain().focus().toggleBold().run()}
-        className={editor.isActive("bold") ? styles.isActive : ""}
-      >
-        bold
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-        className={editor.isActive("italic") ? styles.isActive : ""}
-      >
-        italic
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleStrike().run()}
-        className={editor.isActive("strike") ? styles.isActive : ""}
-      >
-        strike
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleCode().run()}
-        className={editor.isActive("code") ? styles.isActive : ""}
-      >
-        code
-      </button>
-      <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
-        clear marks
-      </button>
-      <button onClick={() => editor.chain().focus().clearNodes().run()}>
-        clear nodes
-      </button>
-      <button
-        onClick={() => editor.chain().focus().setParagraph().run()}
-        className={editor.isActive("paragraph") ? styles.isActive : ""}
-      >
-        paragraph
-      </button> */}
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className={editor.isActive("heading", { level: 1 }) ? styles.isActive : styles.button}
-      >
-        h1
-      </button>
+    <div className={styles.menu}>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={editor.isActive("heading", { level: 2 }) ? styles.isActive : styles.button}
+        className={
+          editor.isActive("heading", { level: 2 })
+            ? styles.isActive
+            : styles.button
+        }
       >
         h2
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        className={editor.isActive("heading", { level: 3 }) ? styles.isActive : styles.button}
+        className={
+          editor.isActive("heading", { level: 3 })
+            ? styles.isActive
+            : styles.button
+        }
       >
         h3
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-        className={editor.isActive("heading", { level: 4 }) ? styles.isActive : styles.button}
+        className={
+          editor.isActive("heading", { level: 4 })
+            ? styles.isActive
+            : styles.button
+        }
       >
         h4
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-        className={editor.isActive("heading", { level: 5 }) ? styles.isActive : styles.button}
+        className={
+          editor.isActive("heading", { level: 5 })
+            ? styles.isActive
+            : styles.button
+        }
       >
         h5
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-        className={editor.isActive("heading", { level: 6 }) ? styles.isActive : styles.button}
+        className={
+          editor.isActive("heading", { level: 6 })
+            ? styles.isActive
+            : styles.button
+        }
       >
         h6
       </button>
-      {/* <button
+      <button
+        onClick={() => editor.chain().focus().toggleItalic().run()}
+        className={editor.isActive("italic") ? styles.isActive : styles.button}
+      >
+        italic
+      </button>
+      <button
+        onClick={() => editor.chain().focus().toggleBold().run()}
+        className={editor.isActive("bold") ? styles.isActive : styles.button}
+      >
+        bold
+      </button>
+      <button
         onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={editor.isActive("bulletList") ? styles.isActive : ""}
+        className={
+          editor.isActive("bulletList") ? styles.isActive : styles.button
+        }
       >
         bullet list
       </button>
       <button
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={editor.isActive("orderedList") ? styles.isActive : ""}
+        className={
+          editor.isActive("orderedList") ? styles.isActive : styles.button
+        }
       >
         ordered list
       </button>
       <button
-        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        className={editor.isActive("codeBlock") ? styles.isActive : ""}
-      >
-        code block
-      </button>
-      <button
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={editor.isActive("blockquote") ? styles.isActive : ""}
+        className={
+          editor.isActive("blockquote") ? styles.isActive : styles.button
+        }
       >
         blockquote
       </button>
-      <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
-        horizontal rule
+      <button
+        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+        className={
+          editor.isActive("codeBlock") ? styles.isActive : styles.button
+        }
+      >
+        code block
       </button>
-      <button onClick={() => editor.chain().focus().setHardBreak().run()}>
-        hard break
-      </button>
-      <button onClick={() => editor.chain().focus().undo().run()}>undo</button>
-      <button onClick={() => editor.chain().focus().redo().run()}>redo</button>*/}
-    </> 
+    </div>
   );
 };
 
-export default function TextEditor() {
+export default function TextEditor({ token }) {
+  const [title, setTitle] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const editor = useEditor({
     extensions: [StarterKit],
-    content: `<p>Hola mundo</p>`,
+    content: `<p>Write your post content here...</p>`,
   });
 
+  const handlePublic = async () => {
+    setLoading(true);
+
+    const post = {
+      title: title,
+      content: editor.getHTML(),
+    };
+
+    const result = await createPost(token, post);
+
+    if (result?.error?.response.data.error) {
+      setLoading(false);
+      setError(result.error.response.data.error);
+    }
+
+    setLoading(false);
+
+    router.push("/");
+  };
+
   return (
-    <div className={styles.textContainer}>
-      <MenuBar editor={editor} />
-      <EditorContent editor={editor} contenteditable={true}/>
-    </div>
+    <>
+      <div className={styles.textContainer}>
+        <MenuBar editor={editor} />
+        {error !== "" && <p className="Error">⚠️ {error}</p>}
+        {loading && (
+          <Loader
+            type="ThreeDots"
+            color="#48bb78"
+            height={25}
+            width={50}
+            style={{ margin: "5px auto", textAlign: "center" }}
+          />
+        )}
+        <input
+          type="text"
+          required
+          placeholder="New post title here..."
+          className={styles.title}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+        />
+        <EditorContent editor={editor} />
+      </div>
+      <button className={styles.publicButton} onClick={handlePublic}>
+        Publish
+      </button>
+    </>
   );
 }

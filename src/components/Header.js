@@ -58,7 +58,9 @@ export default function Header() {
                       </Link>
                     </li>
                     <li>
-                      <a href="#">Create post</a>
+                      <Link href="/create-post">
+                        <a>Create post</a>
+                      </Link>
                     </li>
                   </ul>
                 </nav>
