@@ -58,6 +58,18 @@ button, a {
     border-radius: 0.4rem;
   }
 
+  textarea {
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+
+    background: var(--gray);
+    border: 1px solid var(--border-gray);
+
+    border-radius: 0.4rem;
+
+    resize: none;
+  }
+
   .ButtonContinue {
     margin-top: 2rem;
     margin-bottom: none;

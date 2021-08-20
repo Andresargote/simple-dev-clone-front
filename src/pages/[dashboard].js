@@ -16,14 +16,14 @@ export default function Dashboard({ data, token }) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
-  const [postToDelete, setPostToDelete] = useState({}); 
+  const [postToDelete, setPostToDelete] = useState({});
 
   useEffect(() => {
     if (user?.username === data.username) {
       setLoading(true);
       getPostByUsername(data.username)
         .then((posts) => {
-          setPosts(posts);
+          setPosts(posts.reverse());
           setLoading(false);
         })
         .catch((error) => {
@@ -34,11 +34,11 @@ export default function Dashboard({ data, token }) {
     return;
   }, [user]);
 
-  const handleDeletePost = (id, title) => {
+  const handleDeletePost = (slug, title) => {
     setModal(true);
     setPostToDelete({
-      id,
-      title
+      slug,
+      title,
     });
   };
 
@@ -49,18 +49,39 @@ export default function Dashboard({ data, token }) {
       </Head>
       <Header />
       <main className={styles.dashboardMain}>
-        {modal && <Modal token={token} user={user} post={postToDelete} setPost={setPostToDelete} setModal={setModal}/>}
+        {modal && (
+          <Modal
+            token={token}
+            user={user}
+            post={postToDelete}
+            posts={posts}
+            setPost={setPostToDelete}
+            setPosts={setPosts}
+            setModal={setModal}
+          />
+        )}
         <div className={styles.dashboardUser}>
           <img src="https://github.com/andresargote.png" alt={data.username} />
           <div className={styles.usernameAndEdit}>
             <h2>{data.username}</h2>
             {user?.username === data.username && (
-              <Link href="/edit-profile">
+              <Link href={`/edit-profile/${data.username}`}>
                 <a className={styles.editProfile}>Edit profile</a>
               </Link>
             )}
           </div>
           <p>{data.bio ? data.bio : "404 bio not found"}</p>
+
+          <div className={styles.extraInformation}>
+            {data.location && <span>📍 {data.location}</span>}
+            {data.websiteUrl && (
+              <span>
+                <a href={`${data.websiteUrl}`} target="_blank" rel="noreferrer">
+                🔗 Website
+                </a>
+              </span>
+            )}
+          </div>
         </div>
 
         {user?.username === data.username && <h4>Posts</h4>}
@@ -68,18 +89,25 @@ export default function Dashboard({ data, token }) {
         {loading ? (
           <SkeletonDashboard />
         ) : (
-          posts.map(({ id, title }) => {
+          posts.map(({ id, title, content, slug }) => {
             return (
               <article className={styles.article} key={id}>
                 <h2>{title}</h2>
                 <div className={styles.articlesButtons}>
                   <button
                     className={styles.delete}
-                    onClick={() => handleDeletePost(id, title)}
+                    onClick={() => {
+                      handleDeletePost(slug, title);
+                    }}
                   >
                     Delete
                   </button>
-                  <button>Edit</button>
+
+                  <button>
+                    <Link href={`/edit-post/${slug}`}>
+                      <a>Edit</a>
+                    </Link>
+                  </button>
                 </div>
               </article>
             );
@@ -99,7 +127,7 @@ export async function getServerSideProps(ctx) {
   return {
     props: {
       data,
-      token
+      token,
     },
   };
 }

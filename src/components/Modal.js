@@ -4,14 +4,14 @@ import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import styles from "../styles/Modal.module.scss";
 
-export default function Modal({ token, user, post, setPost, setModal }) {
+export default function Modal({ token, user, post, posts, setPost, setPosts, setModal }) {
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState("");
 
   const handleDeletePost = async () => {
     setLoader(true);
 
-    const response = await deletePost(token, post.id);
+    const response = await deletePost(token, post.slug);
 
     if (response?.error?.response.status === 401) {
       setLoader(false);
@@ -22,6 +22,8 @@ export default function Modal({ token, user, post, setPost, setModal }) {
       setLoader(false);
       setError(response.error.response.data.error);
     }
+
+    setPosts(posts.filter((posts) => posts.slug !== post.slug));
 
     setLoader(false);
     setModal(false);

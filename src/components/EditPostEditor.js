@@ -1,8 +1,8 @@
 import { useState } from "react";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { createPost } from "../services/post";
+import { updatePost } from "../services/post";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import styles from "../styles/TextEditor.module.scss";
@@ -112,36 +112,33 @@ const MenuBar = ({ editor }) => {
   );
 };
 
-export default function TextEditor({ token }) {
-  const [title, setTitle] = useState("");
+export default function EditPostEditor({ post, token }) {
+  const [title, setTitle] = useState(post.title);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const editor = useEditor({
     extensions: [StarterKit],
-    content: `<p>Write your post content here...</p>`,
+    content: post.content,
   });
 
   const handlePublic = async () => {
     setLoading(true);
 
-    const post = {
+    const content = {
       title: title,
       content: editor.getHTML(),
     };
 
-    const result = await createPost(token, post);
+    const result = await updatePost(token, post.slug, content);
 
     if (result?.error?.response.data.error) {
       setLoading(false);
       setError(result.error.response.data.error);
-    }else {
-
+    } else {
       setLoading(false);
-  
       router.push("/");
     }
-
   };
 
   return (
@@ -159,6 +156,7 @@ export default function TextEditor({ token }) {
           />
         )}
         <input
+          value={title}
           type="text"
           required
           placeholder="New post title here..."
@@ -170,7 +168,7 @@ export default function TextEditor({ token }) {
         <EditorContent editor={editor} />
       </div>
       <button className={styles.publicButton} onClick={handlePublic}>
-        Publish
+        Edit
       </button>
     </>
   );

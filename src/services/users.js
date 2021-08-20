@@ -13,17 +13,16 @@ const createUser = async (bodyUser) => {
 
 const loginUser = async (bodyUser) => {
   try {
-    const {data} = await axios.post(API_URL + "user/login", bodyUser);
+    const { data } = await axios.post(API_URL + "user/login", bodyUser);
 
     return {
       token: data.token,
       user: {
         username: data.username,
         name: data.name,
-        avatar_url: "https://github.com/andresargote.png"
-      }
+        avatar_url: "https://github.com/andresargote.png",
+      },
     };
-    
   } catch (error) {
     return { error: error.response.data.error };
   }
@@ -31,36 +30,59 @@ const loginUser = async (bodyUser) => {
 
 const recoverUserInformation = async (token) => {
   try {
-    const {data} = await axios.get(API_URL + "user/token", {
-      headers: { 
-        "Authorization": `Bearer ${token}`
-      }
+    const { data } = await axios.get(API_URL + "user/token", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     return {
       user: {
         avatar_url: "https://github.com/andresargote.png",
-        ...data
-      }
+        ...data,
+      },
     };
-  }catch (error) {
+  } catch (error) {
     return error;
   }
-}
+};
 
 const getUser = async (user) => {
   try {
-    const {data} = await axios.get(API_URL + `user/${user}`);
+    const { data } = await axios.get(API_URL + `user/${user}`);
     return data;
-  }catch (error) {
+  } catch (error) {
     return error;
   }
-}
+};
+
+const updateUser = async (token, user, body) => {
+  try {
+    const { data } = await axios.put(
+      API_URL + `user/update/${user}`,
+      {
+        bio: body.bio,
+        location: body.location,
+        websiteUrl: body.websiteUrl,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return data;
+  } catch (error) {
+    return {error}
+  }
+};
 
 module.exports = {
   createUser,
   loginUser,
   recoverUserInformation,
   getUser,
-  api: API_URL
+  updateUser,
+  api: API_URL,
 };

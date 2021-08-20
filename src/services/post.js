@@ -20,6 +20,15 @@ const getPostByUsername = async (username) => {
   }
 };
 
+const getPostBySlug = async (slug) => {
+  try {
+    const { data } = await axios.get(`${API_URL}/post/${slug}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const createPost = async (token, content) => {
   try {
     const post = await axios.post(
@@ -37,14 +46,18 @@ const createPost = async (token, content) => {
 
     return post;
   } catch (error) {
-    return {error};
+    return { error };
   }
 };
 
-const deletePost = async (token, id) => {
+const updatePost = async (token, slug, content) => {
   try {
-    const deletePost = await axios.delete(
-      API_URL + `post/delete/${id}`,
+    const post = await axios.put(
+      API_URL + `post/update/${slug}`,
+      {
+        title: content.title,
+        content: content.content,
+      },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -52,15 +65,31 @@ const deletePost = async (token, id) => {
       }
     );
 
+    return post;
+  } catch (error) {
+    return { error };
+  }
+};
+
+const deletePost = async (token, slug) => {
+  try {
+    const deletePost = await axios.delete(API_URL + `post/delete/${slug}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     return deletePost;
   } catch (error) {
-    return {error};
+    return { error };
   }
-}
+};
 
 module.exports = {
   getPosts,
   getPostByUsername,
+  getPostBySlug,
   createPost,
-  deletePost
+  updatePost,
+  deletePost,
 };

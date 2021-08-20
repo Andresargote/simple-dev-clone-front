@@ -52,16 +52,16 @@ export default function Header() {
 
                 <nav>
                   <ul>
-                    <li>
-                      <Link href={`/${user.username}`}>
-                        <a>Dashboard</a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/create-post">
-                        <a>Create post</a>
-                      </Link>
-                    </li>
+                    <Link href={`/${user.username}`}>
+                      <a>
+                        <li>Dashboard</li>
+                      </a>
+                    </Link>
+                    <Link href="/create-post">
+                      <a>
+                        <li>Create post</li>
+                      </a>
+                    </Link>
                   </ul>
                 </nav>
               </div>

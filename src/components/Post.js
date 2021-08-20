@@ -44,7 +44,7 @@ export default function Post() {
                   <time dateTime={post.date}>{useFormatDate(post.date)}</time>
                 </div>
               </div>
-              <h2>{post.title}</h2>
+              <h2><Link href={`/article/${post.slug}`}><a>{post.title}</a></Link></h2>
             </article>
           );
         })

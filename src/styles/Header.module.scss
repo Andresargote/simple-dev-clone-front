@@ -22,7 +22,7 @@
 
         a {
           text-decoration: none;
-          
+
           span {
             font-weight: lighter;
             text-transform: lowercase;
@@ -30,7 +30,6 @@
             color: var(--green);
           }
         }
-
       }
     }
 
@@ -75,7 +74,6 @@
         width: 25rem;
 
         .userMenuInfoNameAndUsername {
-
           a {
             text-decoration: none;
             display: flex;
@@ -83,20 +81,20 @@
             padding: 0.8rem;
             border-radius: 0.4rem;
             cursor: pointer;
-  
-            margin-bottom: .5rem;
-  
+
+            margin-bottom: 0.5rem;
+
             &:hover {
               background: var(--hover);
               color: var(--green);
             }
-  
+
             .name {
               font-size: 1.6rem;
               font-weight: 500;
               margin-bottom: 0.5rem;
             }
-  
+
             .username {
               font-size: 1.4rem;
               color: #7d8a97;
@@ -106,23 +104,22 @@
 
         nav {
           ul {
-            li {
-              list-style: none;
-              padding: 1rem;
-              border-radius: 0.4rem;
-              cursor: pointer;
-              width: 100%;
+            a {
+              text-decoration: none;
+              color: var(--text);
+              font-size: 1.4rem;
 
-              a {
-                text-decoration: none;
-                color: var(--text);
-                font-size: 1.4rem;
+              li {
+                list-style: none;
+                padding: 1rem;
+                border-radius: 0.4rem;
+                cursor: pointer;
+                width: 100%;
 
-              }
-    
-              &:hover {
-                background: var(--hover);
-                color: var(--green);
+                &:hover {
+                  background: var(--hover);
+                  color: var(--green);
+                }
               }
             }
           }
@@ -191,7 +188,7 @@
   }
 }
 
-@media only screen and (max-width: 1280px){
+@media only screen and (max-width: 1280px) {
   .header {
     .headerContainer {
       width: 95%;
@@ -200,7 +197,6 @@
         .userMenuInfo {
           right: 4rem;
         }
-
       }
     }
   }
@@ -215,7 +211,6 @@
         .userMenuInfo {
           right: 3rem;
         }
-
       }
     }
   }
@@ -287,7 +282,6 @@
           display: flex;
           background: white;
           height: 100vh;
-
         }
 
         .navMobileHeader {
