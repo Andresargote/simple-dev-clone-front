@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { parseCookies } from "nookies";
 import Head from "next/head";
+import Image from "next/image";
 import Header from "../components/Header";
 import SkeletonDashboard from "../components/SkeletonDashboard";
 import { getUser } from "../services/users";
@@ -17,9 +18,9 @@ export default function Dashboard({ errorCode, data }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (data?.username) {
+    if (data) {
       setLoading(true);
-      getPostByUsername(data?.username)
+      getPostByUsername(data.username)
         .then((posts) => {
           setPosts(posts.reverse());
           setLoading(false);
@@ -29,7 +30,7 @@ export default function Dashboard({ errorCode, data }) {
         });
     }
     return;
-  }, [user]);
+  }, [data]);
 
   return (
     <>
@@ -43,8 +44,14 @@ export default function Dashboard({ errorCode, data }) {
           <Header />
           <main className={styles.dashboardMain}>
             <div className={styles.dashboardUser}>
-              <img
-                src={data?.imgUrl ? data.imgUrl : "https://upload.wikimedia.org/wikipedia/commons/7/71/Black.png"}
+              <Image
+                width={200}
+                height={200}
+                src={
+                  data?.imgUrl
+                    ? data.imgUrl
+                    : "https://upload.wikimedia.org/wikipedia/commons/7/71/Black.png"
+                }
                 alt={data.username}
               />
               <div className={styles.usernameAndEdit}>
@@ -86,23 +93,21 @@ export default function Dashboard({ errorCode, data }) {
                         <a>{title}</a>
                       </Link>
                     </h2>
-                      {user?.username === data.username && (
-                        <div className={styles.articlesButtons}>
-                          <button
-                            className={styles.delete}
-                          >
-                            <Link href={`/delete/${slug}`}>
-                              <a>Delete</a>
-                            </Link>
-                          </button>
+                    {user?.username === data.username && (
+                      <div className={styles.articlesButtons}>
+                        <button className={styles.delete}>
+                          <Link href={`/delete/${slug}`}>
+                            <a>Delete</a>
+                          </Link>
+                        </button>
 
-                          <button>
-                            <Link href={`/edit-post/${slug}`}>
-                              <a>Edit</a>
-                            </Link>
-                          </button>
-                        </div>
-                      )}
+                        <button>
+                          <Link href={`/edit-post/${slug}`}>
+                            <a>Edit</a>
+                          </Link>
+                        </button>
+                      </div>
+                    )}
                   </article>
                 );
               })

@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import Link from "next/link";
 import useMediaQuery from "../hooks/useMediaQueries";
 import { AuthContext } from "../context/AuthContext";
+import Image from "next/image";
 import { getUser } from "../services/users";
 
 import Cancel from "./Cancel";
@@ -36,7 +37,9 @@ export default function Header() {
                 className={styles.userInfo}
                 onClick={() => setUserMenu(!userMenu)}
               >
-                <img
+                <Image
+                width={200}
+                height={200}
                   src={
                     user?.imgUrl
                       ? user?.imgUrl

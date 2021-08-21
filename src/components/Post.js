@@ -11,11 +11,28 @@ export default function Post() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const formateDate = (dateString) => {
+    const date = new Date(dateString);
+    const formatDate = new Intl.DateTimeFormat("en", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    }).format(date);
+
+    return formatDate;
+  };
+
   useEffect(() => {
     setLoading(true);
     getPosts()
       .then((data) => {
-        setPosts(data.reverse());
+        const format = data.map((data) => {
+          return {
+            ...data,
+            date: formateDate(data.date)
+          }
+        }).reverse();
+        setPosts(format);
         setLoading(false);
       })
       .catch((error) => {
@@ -43,10 +60,14 @@ export default function Post() {
                       <span>{post.creator}</span>
                     </a>
                   </Link>
-                  <time dateTime={post.date}>{useFormatDate(post.date)}</time>
+                  <time dateTime={post.date}>{post.date}</time>
                 </div>
               </div>
-              <h2><Link href={`/article/${post.slug}`}><a>{post.title}</a></Link></h2>
+              <h2>
+                <Link href={`/article/${post.slug}`}>
+                  <a>{post.title}</a>
+                </Link>
+              </h2>
             </article>
           );
         })
