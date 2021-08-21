@@ -1,0 +1,53 @@
+.delete {
+  max-width: 30%;
+  margin: 2rem auto;
+  background: #fff;
+  border: 1px solid #d6d8da;
+  padding: 1rem;
+  border-radius: 0.4rem;
+
+  h4 {
+    font-size: 2.8rem;
+    margin-bottom: 2rem;
+  }
+
+  h2 {
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+  }
+
+  div {
+    button {
+      padding: 0.8rem 1.5rem;
+      font-size: 1.4rem;
+      border-radius: 0.4rem;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--text);
+      background: #d2d6db;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    .red {
+      background: var(--red);
+      margin-right: 1rem;
+      color: white;
+    }
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .delete {
+    max-width: 60%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .delete {
+    max-width: 95%;
+  }
+}

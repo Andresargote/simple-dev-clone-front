@@ -39,8 +39,12 @@
       }
 
       .delete {
-        color: var(--red);
-        margin-right: 0.5rem;
+
+        a {
+
+          color: var(--red);
+          margin-right: 0.5rem;
+        }
       }
     }
 
@@ -50,10 +54,16 @@
       line-height: 1.3;
       cursor: pointer;
       padding: 0 1rem;
+      padding-top: 0.4rem;
 
-      &:hover {
-        color: var(--green);
+      a {
+        text-decoration: none;
+        
+        &:hover {
+          color: var(--green);
+        }
       }
+      
     }
   }
 

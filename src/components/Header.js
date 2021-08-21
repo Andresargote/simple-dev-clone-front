@@ -1,7 +1,8 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Link from "next/link";
 import useMediaQuery from "../hooks/useMediaQueries";
 import { AuthContext } from "../context/AuthContext";
+import { getUser } from "../services/users";
 
 import Cancel from "./Cancel";
 import HamburguerMenu from "./HamburguerMenu";
@@ -9,10 +10,11 @@ import styles from "../styles/Header.module.scss";
 import ArrowDown from "./ArrowDown";
 
 export default function Header() {
-  const { user } = useContext(AuthContext);
+  const { user, signOut } = useContext(AuthContext);
   const [menu, setMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const isBreakpoint = useMediaQuery(425);
+  const [userInfo, setUserInfo] = useState({});
 
   return (
     <header className={styles.header}>
@@ -34,7 +36,14 @@ export default function Header() {
                 className={styles.userInfo}
                 onClick={() => setUserMenu(!userMenu)}
               >
-                <img src={user?.avatar_url} alt={`${user?.username}-img`} />
+                <img
+                  src={
+                    user?.imgUrl
+                      ? user?.imgUrl
+                      : "https://upload.wikimedia.org/wikipedia/commons/7/71/Black.png"
+                  }
+                  alt={`${user?.username}-img`}
+                />
                 <ArrowDown />
               </div>
 
@@ -62,6 +71,9 @@ export default function Header() {
                         <li>Create post</li>
                       </a>
                     </Link>
+                    <a onClick={signOut}>
+                      <li>Sign out</li>
+                    </a>
                   </ul>
                 </nav>
               </div>

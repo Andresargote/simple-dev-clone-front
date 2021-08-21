@@ -7,6 +7,7 @@ import Header from "../../components/Header";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import styles from "../../styles/ProfileEditor.module.scss";
+import Head from "next/head";
 
 export default function EditProfile({ data, token }) {
   const { register, handleSubmit } = useForm();
@@ -30,6 +31,11 @@ export default function EditProfile({ data, token }) {
 
   return (
     <>
+      <Head>
+        <title>
+          Edit profile - {data.username}
+        </title>
+      </Head>
       <Header />
       <main className={styles.profileContainer}>
         {error && <p className="Error">⚠️ {error}</p>}
@@ -43,6 +49,20 @@ export default function EditProfile({ data, token }) {
           />
         )}
         <form className="Form" onSubmit={handleSubmit(handleEditUser)}>
+          <label htmlFor="imgUrl">Image URL</label>
+          <input
+            {...register("imgUrl")}
+            type="url"
+            id="imgUrl"
+            name="imgUrl"
+            pattern="https://.*"
+            size="30"
+            defaultValue={data.imgUrl}
+            placeholder={
+              data.imgUrl ? data.imgUrl : "https://github.com/name_user.png"
+            }
+          />
+
           <label htmlFor="websiteUrl">Website URL</label>
           <input
             {...register("websiteUrl")}

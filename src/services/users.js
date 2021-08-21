@@ -19,8 +19,7 @@ const loginUser = async (bodyUser) => {
       token: data.token,
       user: {
         username: data.username,
-        name: data.name,
-        avatar_url: "https://github.com/andresargote.png",
+        name: data.name
       },
     };
   } catch (error) {
@@ -38,7 +37,6 @@ const recoverUserInformation = async (token) => {
 
     return {
       user: {
-        avatar_url: "https://github.com/andresargote.png",
         ...data,
       },
     };
@@ -52,7 +50,7 @@ const getUser = async (user) => {
     const { data } = await axios.get(API_URL + `user/${user}`);
     return data;
   } catch (error) {
-    return error;
+    return {error};
   }
 };
 
@@ -64,6 +62,7 @@ const updateUser = async (token, user, body) => {
         bio: body.bio,
         location: body.location,
         websiteUrl: body.websiteUrl,
+        imgUrl: body.imgUrl
       },
       {
         headers: {

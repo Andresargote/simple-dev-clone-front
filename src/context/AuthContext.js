@@ -1,5 +1,6 @@
 import { useState, createContext, useEffect } from "react";
 import { setCookie, parseCookies } from "nookies";
+import Cookies from "js-cookie";
 
 import { loginUser, recoverUserInformation } from "../services/users";
 import Router from "next/router";
@@ -41,8 +42,13 @@ export const ContextAuthWrapper = ({ children }) => {
     }
   }
 
+  function signOut(){
+    Cookies.remove("devclone.token");
+    setUser(null);
+  }
+
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, signIn }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
