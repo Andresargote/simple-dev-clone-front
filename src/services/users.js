@@ -19,7 +19,7 @@ const loginUser = async (bodyUser) => {
       token: data.token,
       user: {
         username: data.username,
-        name: data.name
+        name: data.name,
       },
     };
   } catch (error) {
@@ -50,7 +50,7 @@ const getUser = async (user) => {
     const { data } = await axios.get(API_URL + `user/${user}`);
     return data;
   } catch (error) {
-    return {error};
+    return { error };
   }
 };
 
@@ -58,12 +58,7 @@ const updateUser = async (token, user, body) => {
   try {
     const { data } = await axios.put(
       API_URL + `user/update/${user}`,
-      {
-        bio: body.bio,
-        location: body.location,
-        websiteUrl: body.websiteUrl,
-        imgUrl: body.imgUrl
-      },
+      body,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -73,7 +68,7 @@ const updateUser = async (token, user, body) => {
 
     return data;
   } catch (error) {
-    return {error}
+    return { error };
   }
 };
 
