@@ -47,11 +47,7 @@ export default function Dashboard({ errorCode, data }) {
               <Image
                 width={200}
                 height={200}
-                src={
-                  data?.imgUrl
-                    ? data.imgUrl
-                    : "https://upload.wikimedia.org/wikipedia/commons/7/71/Black.png"
-                }
+                src={data?.img}
                 alt={data.username}
               />
               <div className={styles.usernameAndEdit}>

@@ -2,18 +2,20 @@ import { useState } from "react";
 import router from "next/router";
 import { useForm } from "react-hook-form";
 import { parseCookies } from "nookies";
-import { getUser, updateUser } from "../../services/users";
+import { getUser, updateUser, updateUserImage } from "../../services/users";
 import Header from "../../components/Header";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import styles from "../../styles/ProfileEditor.module.scss";
 import Head from "next/head";
 import Error from "../../components/Error";
+import axios from "axios";
 
 export default function EditProfile({ errorCode, data, token }) {
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
   const [loader, setLoader] = useState(false);
+  const [file, setFile] = useState(null)
 
   const handleEditUser = async (body) => {
     setError("");
@@ -29,6 +31,39 @@ export default function EditProfile({ errorCode, data, token }) {
       router.push(`/${data.username}`);
     }
   };
+
+  const fileSelectHandler = (event) => {
+    setFile(event.target.files[0])
+  }
+
+  const fileUploadHandler = async (event) => {
+    event.preventDefault();
+
+    const fd = new FormData();
+
+    fd.append("image", file);
+    fd.append("name", file.name);
+
+    /* const res = await fetch(`http://localhost:8080/api/user/${data.username}/image`, {
+      method: 'PUT',
+      body: file,
+      headers: {
+        "Authorization": "Bearer " + token,
+        "Content-Type": file.type
+      }
+    }); */
+
+    const config = {
+      onUploadProgress: function(progressEvent) {
+        var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+        console.log(percentCompleted)
+      }
+    }
+
+    const res = await axios.put(`http://localhost:8080/api/user/${data.username}/image`, file, {headers: {"Authorization": "Bearer " + token, "Content-Type": file.type}}, config)
+
+    console.log(res);
+  }
 
   return (
     <>
@@ -52,19 +87,16 @@ export default function EditProfile({ errorCode, data, token }) {
               />
             )}
             <form className="Form" onSubmit={handleSubmit(handleEditUser)}>
-              <label htmlFor="imgUrl">Image URL</label>
+              <label htmlFor="profileImg">Profile image</label>
               <input
-                {...register("imgUrl")}
-                type="url"
-                id="imgUrl"
-                name="imgUrl"
-                pattern="https://.*"
-                size="30"
-                defaultValue={data.imgUrl}
-                placeholder={
-                  data.imgUrl ? data.imgUrl : "https://github.com/name_user.png"
-                }
+                type="file"
+                id="profileImg"
+                name="profileImg"
+                accept="image/png, image/jpeg, image/jpg"
+                multiple={false}
+                onChange={fileSelectHandler}
               />
+              <button onClick={fileUploadHandler}>Upload</button>
 
               <label htmlFor="websiteUrl">Website URL</label>
               <input

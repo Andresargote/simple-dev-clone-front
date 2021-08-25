@@ -38,13 +38,9 @@ export default function Header() {
                 onClick={() => setUserMenu(!userMenu)}
               >
                 <Image
-                width={200}
-                height={200}
-                  src={
-                    user?.imgUrl
-                      ? user?.imgUrl
-                      : "https://upload.wikimedia.org/wikipedia/commons/7/71/Black.png"
-                  }
+                  width={200}
+                  height={200}
+                  src={user.img}
                   alt={`${user?.username}-img`}
                 />
                 <ArrowDown />

@@ -72,11 +72,30 @@ const updateUser = async (token, user, body) => {
   }
 };
 
+const updateUserImage = async (token, user, fd, type) => {
+  try {
+    const { data } = await axios.put(
+      API_URL + `user/${user}/image`,
+      fd,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    return data;
+  } catch (error) {
+    return { error };
+  }
+};
+
 module.exports = {
   createUser,
   loginUser,
   recoverUserInformation,
   getUser,
   updateUser,
+  updateUserImage,
   api: API_URL,
 };
