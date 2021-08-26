@@ -9,13 +9,15 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import styles from "../../styles/ProfileEditor.module.scss";
 import Head from "next/head";
 import Error from "../../components/Error";
-import axios from "axios";
 
 export default function EditProfile({ errorCode, data, token }) {
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
   const [loader, setLoader] = useState(false);
-  const [file, setFile] = useState(null)
+  const [file, setFile] = useState(null);
+  const [imgError, setImgError] = useState("");
+  const [imgLoader, setImgLoader] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleEditUser = async (body) => {
     setError("");
@@ -38,31 +40,20 @@ export default function EditProfile({ errorCode, data, token }) {
 
   const fileUploadHandler = async (event) => {
     event.preventDefault();
+    setImgError("");
+    setImgLoader(true);
+    setSuccess(false);
 
-    const fd = new FormData();
+    const res = await updateUserImage(token, data.username, file, file.type);
 
-    fd.append("image", file);
-    fd.append("name", file.name);
-
-    /* const res = await fetch(`http://localhost:8080/api/user/${data.username}/image`, {
-      method: 'PUT',
-      body: file,
-      headers: {
-        "Authorization": "Bearer " + token,
-        "Content-Type": file.type
-      }
-    }); */
-
-    const config = {
-      onUploadProgress: function(progressEvent) {
-        var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-        console.log(percentCompleted)
-      }
+    if (res?.error?.response.data.error) {
+      setImgLoader(false);
+      setImgError(res?.error.response.data.error);
     }
 
-    const res = await axios.put(`http://localhost:8080/api/user/${data.username}/image`, file, {headers: {"Authorization": "Bearer " + token, "Content-Type": file.type}}, config)
+    setImgLoader(false);
+    setSuccess(true);
 
-    console.log(res);
   }
 
   return (
@@ -88,6 +79,17 @@ export default function EditProfile({ errorCode, data, token }) {
             )}
             <form className="Form" onSubmit={handleSubmit(handleEditUser)}>
               <label htmlFor="profileImg">Profile image</label>
+              {imgLoader && (
+                <Loader
+                  type="ThreeDots"
+                  color="#48bb78"
+                  height={25}
+                  width={50}
+                  style={{ margin: "10px auto" }}
+                />
+              )}
+              {success && <p style={{fontSize: "14px", marginBottom: "10px"}}>✅ Image uploaded successfully</p>}
+              {imgError && <p className="Error">⚠️ {imgError}</p>}
               <input
                 type="file"
                 id="profileImg"
@@ -96,7 +98,7 @@ export default function EditProfile({ errorCode, data, token }) {
                 multiple={false}
                 onChange={fileSelectHandler}
               />
-              <button onClick={fileUploadHandler}>Upload</button>
+              <button onClick={fileUploadHandler} className={styles.uploadButton}>Upload</button>
 
               <label htmlFor="websiteUrl">Website URL</label>
               <input

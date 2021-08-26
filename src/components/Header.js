@@ -1,9 +1,8 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import Link from "next/link";
 import useMediaQuery from "../hooks/useMediaQueries";
 import { AuthContext } from "../context/AuthContext";
 import Image from "next/image";
-import { getUser } from "../services/users";
 
 import Cancel from "./Cancel";
 import HamburguerMenu from "./HamburguerMenu";
@@ -15,7 +14,6 @@ export default function Header() {
   const [menu, setMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const isBreakpoint = useMediaQuery(425);
-  const [userInfo, setUserInfo] = useState({});
 
   return (
     <header className={styles.header}>
@@ -38,9 +36,9 @@ export default function Header() {
                 onClick={() => setUserMenu(!userMenu)}
               >
                 <Image
+                  src={user.img}
                   width={200}
                   height={200}
-                  src={user.img}
                   alt={`${user?.username}-img`}
                 />
                 <ArrowDown />

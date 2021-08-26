@@ -72,14 +72,15 @@ const updateUser = async (token, user, body) => {
   }
 };
 
-const updateUserImage = async (token, user, fd, type) => {
+const updateUserImage = async (token, user, file, type) => {
   try {
     const { data } = await axios.put(
       API_URL + `user/${user}/image`,
-      fd,
+      file,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Content-Type": type,
+          "Authorization": `Bearer ${token}`,
         },
       },
     );

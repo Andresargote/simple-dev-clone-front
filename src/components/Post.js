@@ -1,13 +1,11 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect} from "react";
 import { getPosts } from "../services/post";
-import { AuthContext } from "../context/AuthContext";
 import Link from "next/link";
-import useFormatDate from "../hooks/useFormatDate";
+import Image from "next/image";
 import styles from "../styles/Post.module.scss";
 import SkeletonComponent from "./SkeletonComponent";
 
 export default function Post() {
-  const { user } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -50,10 +48,12 @@ export default function Post() {
           return (
             <article className={styles.article} key={post.id}>
               <div className={styles.articleUser}>
-                {/* <img
-                  src={user?.imgUrl ? user.imgUrl : "https://upload.wikimedia.org/wikipedia/commons/7/71/Black.png"}
-                  alt={post.username}
-                /> */}
+                <Image
+                  src={post.userImg}
+                  width={200}
+                  height={200}
+                  alt={post.creator}
+                />
                 <div>
                   <Link href={`/${post.creator}`}>
                     <a>
