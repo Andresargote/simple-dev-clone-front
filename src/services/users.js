@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //https://dev-clone-api.herokuapp.com/api/
-const API_URL = `http://localhost:8080/api/`;
+const API_URL = `https://simple-dev-clone.herokuapp.com/api/`;
 
 const createUser = async (bodyUser) => {
   try {

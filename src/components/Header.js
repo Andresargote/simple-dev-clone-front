@@ -15,6 +15,8 @@ export default function Header() {
   const [userMenu, setUserMenu] = useState(false);
   const isBreakpoint = useMediaQuery(425);
 
+  console.log(user);
+
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
@@ -35,13 +37,13 @@ export default function Header() {
                 className={styles.userInfo}
                 onClick={() => setUserMenu(!userMenu)}
               >
-                <Image
-                  src={user.img}
-                  width={200}
-                  height={200}
-                  alt={`${user?.username}-img`}
-                />
-                <ArrowDown />
+              <Image
+                src={user.img}
+                width={200}
+                height={200}
+                alt={`${user.username}-img`}
+              />
+              <ArrowDown />
               </div>
 
               <div

@@ -36,7 +36,13 @@ export const ContextAuthWrapper = ({ children }) => {
         maxAge: 60 * 60 * 12, //12 hours
       });
 
-      setUser(user);
+      recoverUserInformation(token)
+        .then((response) => {
+          setUser(response.user);
+        })
+        .catch((error) => {
+          setUser(null);
+        });
 
       Router.push("/");
     }

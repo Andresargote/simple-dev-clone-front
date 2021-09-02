@@ -17,6 +17,8 @@ export default function Dashboard({ errorCode, data }) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  console.log(user, data);
+
   useEffect(() => {
     if (data) {
       setLoading(true);
@@ -47,9 +49,9 @@ export default function Dashboard({ errorCode, data }) {
               <Image
                 width={200}
                 height={200}
-                src={data?.img}
+                src={data.img}
                 alt={data.username}
-              />
+                />
               <div className={styles.usernameAndEdit}>
                 <h2>{data.username}</h2>
                 {user?.username === data.username && (

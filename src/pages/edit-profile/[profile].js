@@ -49,11 +49,10 @@ export default function EditProfile({ errorCode, data, token }) {
     if (res?.error?.response.data.error) {
       setImgLoader(false);
       setImgError(res?.error.response.data.error);
+    }else {
+      setImgLoader(false);
+      setSuccess(true);
     }
-
-    setImgLoader(false);
-    setSuccess(true);
-
   }
 
   return (
@@ -159,14 +158,24 @@ export async function getServerSideProps(ctx) {
         errorCode,
       },
     };
-  } else {
-    const { ["devclone.token"]: token } = parseCookies(ctx);
+  } 
+  
 
+  const { ["devclone.token"]: token } = parseCookies(ctx);
+
+  if (!token) {
     return {
-      props: {
-        data,
-        token,
+      redirect: {
+        destination: "/",
+        permanent: false,
       },
     };
   }
+
+  return {
+    props: {
+      data,
+      token,
+    },
+  };
 }

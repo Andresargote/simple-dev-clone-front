@@ -41,7 +41,7 @@ export default function Post({ errorCode, post, user }) {
 
 export async function getServerSideProps({ params, res }) {
   const post = await getPostBySlug(params.post);
-  const errorCode = post.ok ? false : post.error?.response.status;
+  const errorCode = post.ok ? false : post.error?.response?.status;
 
   if (errorCode) {
     res.statusCode = errorCode;
