@@ -58,7 +58,7 @@ export default function Post() {
               <div className={styles.articleUser}>
                 <Image src={post.userImg} width={200} height={200} alt={post.creator} />
                 <div>
-                  <a style={{ zIndex: 50 }}>
+                  <a>
                     <span>{post.creator}</span>
                   </a>
 
