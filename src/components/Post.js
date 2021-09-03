@@ -1,7 +1,7 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { getPosts } from "../services/post";
-import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import styles from "../styles/Post.module.scss";
 import SkeletonComponent from "./SkeletonComponent";
 
@@ -24,12 +24,14 @@ export default function Post() {
     setLoading(true);
     getPosts()
       .then((data) => {
-        const format = data.map((data) => {
-          return {
-            ...data,
-            date: formateDate(data.date)
-          }
-        }).reverse();
+        const format = data
+          .map((data) => {
+            return {
+              ...data,
+              date: formateDate(data.date),
+            };
+          })
+          .reverse();
         setPosts(format);
         setLoading(false);
       })
@@ -39,6 +41,8 @@ export default function Post() {
       });
   }, []);
 
+  const router = useRouter();
+  const handlerChangeURL = (url) => router.push(url);
   return (
     <>
       {loading ? (
@@ -46,27 +50,23 @@ export default function Post() {
       ) : (
         posts.map((post) => {
           return (
-            <article className={styles.article} key={post.id}>
+            <article
+              className={styles.article}
+              key={post.id}
+              onClick={() => handlerChangeURL(`/article/${post.slug}`)}
+            >
               <div className={styles.articleUser}>
-                <Image
-                  src={post.userImg}
-                  width={200}
-                  height={200}
-                  alt={post.creator}
-                />
+                <Image src={post.userImg} width={200} height={200} alt={post.creator} />
                 <div>
-                  <Link href={`/${post.creator}`}>
-                    <a>
-                      <span>{post.creator}</span>
-                    </a>
-                  </Link>
+                  <a>
+                    <span>{post.creator}</span>
+                  </a>
+
                   <time dateTime={post.date}>{post.date}</time>
                 </div>
               </div>
               <h2>
-                <Link href={`/article/${post.slug}`}>
-                  <a>{post.title}</a>
-                </Link>
+                <a>{post.title}</a>
               </h2>
             </article>
           );
